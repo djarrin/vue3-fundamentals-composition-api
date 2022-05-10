@@ -1,26 +1,42 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>{{ header }}</h1>
+  <form
+      class="add-item-form"
+      @submit.prevent="items.push({id: items.length + 1, label: newItem})"
+  >
+    <input
+        type="text"
+        placeholder="Add an item"
+        v-model="newItem"
+    >
+    <label>
+      <input type="checkbox" v-model="newItemPriorityHigh">
+      High Priority
+    </label>
+    <button
+        class="btn btn-primary"
+    >
+      Save item
+    </button>
+  </form>
+  <ul>
+    <li v-for="({id, label}) in items" :key="id">{{ label }}</li>
+  </ul>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
+import { ref } from 'vue'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+const header = ref('Shopping List App')
+const items = ref([
+  {id:1, label:'Party hats'},
+  {id: 2, label:'board games'},
+  {id: 3, label: '20 cups'}
+])
+const newItem = ref('')
+const newItemPriorityHigh = ref(false)
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style src="./assets/main.css">
+
 </style>
